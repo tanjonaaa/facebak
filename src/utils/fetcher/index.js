@@ -1,5 +1,4 @@
 import axios from "axios";
-
 const host = "http://localhost:8080"; // default on local
 
 const getAllUsers = async () => {
@@ -67,6 +66,14 @@ const createPostOrUpdate = async (post) => {
     )
 }
 
+const postComment = async (postId,content) => {
+    return await axios.post(host.concat("/posts/",postId,"/comments"),{postId,content});
+}
+
+const getCommentById = async (postId) => {
+    return await axios.get(host.concat("posts/",postId,"/comments"));
+}
+
 export {
     getAllUsers,
     getUserById,
@@ -77,5 +84,7 @@ export {
     deleteAReaction,
     getPosts,
     getPostById,
-    createPostOrUpdate
+    createPostOrUpdate,
+    postComment,
+    getCommentById
 }
