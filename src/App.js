@@ -1,17 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import { Navbar } from './components/Navbar';
+import { NewsFeed } from './pages/NewsFeed';
 
 function App() {
   return (
-    <div className="chat-notification">
-      <div className="chat-notification-logo-wrapper">
-        <img className="chat-notification-logo" src="/img/logo.svg" alt="ChitChat Logo" />
+    <>
+      <Navbar></Navbar>
+
+      <div className="h-12"></div>
+
+      <div className="contentBody mt-3 flex w-full">
+        <aside className="asideEmpty w-3/12 flex-shrink-0 p-2 h-screen">
+          <div className="asidePadded w-100"></div>
+        </aside>
+
+        <main className="mainPage flex flex-col gap-4">
+          <NewsFeed />
+        </main>
+
+
+        <aside className="asideEmpty w-3/12 flex-shrink-0 p-2 h-screen">
+          <div className="asidePadded w-100"></div>
+        </aside>
       </div>
-      <div className="chat-notification-content">
-        <h4 className="chat-notification-title">ChitChat</h4>
-        <p className="chat-notification-message">You have a new message!</p>
-      </div>
-    </div>
+    </>
   );
 }
 
