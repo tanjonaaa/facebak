@@ -1,10 +1,9 @@
 import './App.css';
-import {BrowserRouter} from "react-router-dom";
+import Routes from './components/CommentPostModal/Route/Route';
 
 function App() {
   return (
-    <BrowserRouter>
-    </BrowserRouter>
+    <Routes/>
   );
 }
 
