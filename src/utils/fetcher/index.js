@@ -71,7 +71,7 @@ const postComment = async (postId,content) => {
 }
 
 const getCommentById = async (postId) => {
-    return (await axios.get( host.concat( "posts/", postId, "/comments" ) )).data;
+    return (await axios.get(`${host}/posts/${postId}/comments` )).data;
 }
 
 export {

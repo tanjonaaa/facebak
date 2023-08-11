@@ -3,10 +3,10 @@ import {AiFillHeart} from "react-icons/ai";
 import {HiOutlineHeart} from "react-icons/hi";
 import {BiCommentDots, BiSolidComment} from "react-icons/bi";
 import {createPortal} from "react-dom";
-import CommentPostModal from "./CommentPostModal";
-import TimesAgo from "../../utils/TimesAgo";
+import CommentPostModal from "../CommentPostModal";
+import TimesAgo from "../../../utils/TimesAgo";
 
-export function News({data}) {
+export function Index({data}) {
     const [portal,setPortal] = useState(null);
     const [totalLike,setTotalLike] = useState(0);
 
