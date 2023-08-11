@@ -1,9 +1,10 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { HiOutlineHeart } from "react-icons/hi";
 import {BiCommentDots} from "react-icons/bi";
 import {AiFillHeart} from "react-icons/ai";
 import {BiSolidComment} from "react-icons/bi"
+import axios from 'axios';
 function News() {
     const data = {
         user: "Maria Rnd",
@@ -34,6 +35,10 @@ function News() {
     const handleClickComment = () => {
         setOpenComment(!openedComment);
     }
+
+
+    
+    
 
 
   return (
@@ -77,6 +82,7 @@ function News() {
                     <div className="btn-row-container flex">
                         <div className='relative flex items-center justify-center'>
                             <button onClick={handleLikeClick} className="m-2 justify-center flex items-center rounded-btn p-1 rounded-md">
+                            
                                 <span className='absolute bottom-9'>{totalLike === 0 ? null : totalLike}</span>
                                 {
                                     liked 
@@ -84,6 +90,7 @@ function News() {
                                     : <HiOutlineHeart className='w-6 h-6'/>
                                 }
                                 </button>
+
                         </div>
                         
                         <button className="m-2 rounded-btn p-1 rounded-md " 
