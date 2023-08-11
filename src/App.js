@@ -1,9 +1,14 @@
 import './App.css';
 import Routes from './components/CommentPostModal/Route/Route';
+import {Navbar} from '../src/components/Navbar';
 
 function App() {
   return (
-    <Routes/>
+    <>
+      <Navbar />
+      <div className='h-12'/>
+      <Routes />
+    </>
   );
 }
 
