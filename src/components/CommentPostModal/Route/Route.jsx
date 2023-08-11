@@ -1,7 +1,11 @@
+import {BrowserRouter, Routes as Router , Route} from "react-router-dom"
+import News from "../../../pages/Home/News"
 export default function Routes(){
     return (
-        <>
-        <h1>BOnjour</h1>
-        </>
+        <BrowserRouter>
+            <Router>
+                <Route path="/" Component={News}/>
+            </Router>
+        </BrowserRouter>
     )
 }
