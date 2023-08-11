@@ -36,11 +36,6 @@ function News() {
         setOpenComment(!openedComment);
     }
 
-
-    
-    
-
-
   return (
     <div>
         
