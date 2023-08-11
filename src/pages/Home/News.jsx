@@ -4,7 +4,7 @@ function News() {
   return (
     <div>
         
-    <header class="flex p-2.5 py-3.5 fixed w-full bg-white border-b">
+    <header className="flex p-2.5 py-3.5 fixed w-full bg-white border-b">
         <div class="flex justify-between w-full">
             <a href="#">App name or logo</a>
             <div>

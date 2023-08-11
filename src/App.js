@@ -1,5 +1,5 @@
 import './App.css';
-import Routes from './components/CommentPostModal/Route/Route';
+import Routes from './components/Route';
 
 function App() {
   return (
