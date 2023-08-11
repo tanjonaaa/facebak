@@ -1,6 +1,9 @@
 import React from 'react'
 import { useState } from 'react';
 import { HiOutlineHeart } from "react-icons/hi";
+import {BiCommentDots} from "react-icons/bi";
+import {AiFillHeart} from "react-icons/ai";
+import {BiSolidComment} from "react-icons/bi"
 function News() {
     const data = {
         user: "Maria Rnd",
@@ -8,16 +11,28 @@ function News() {
         hour:"1h34mn"
     }
 
+    const [totalLike,setTotalLike] = useState(0);
+
     // Create a state variable for likes
-    const [likes, setLikes] = useState(0);
+    const [liked, setLikes] = useState(false);
 
     // Create a function to handle the click event
+    
     const handleLikeClick = () => {
-        if (likes === null) {
-            setLikes(1);
-        } else {
-            setLikes(null);
-        }
+        setTotalLike(value => {
+            if(!liked){
+                return value + 1;
+            }else{
+                return value - 1;
+            }
+        })
+        setLikes(!liked);
+    }
+
+    const [openedComment,setOpenComment] = useState(false);
+
+    const handleClickComment = () => {
+        setOpenComment(!openedComment);
     }
 
 
@@ -46,7 +61,9 @@ function News() {
 
             <section className="news-component flex bg-white flex-col p-4 gap-4 border rounded-xl" id="multiplier">
                 <div className="header-news-component flex gap-2 items-center">
-                    <div className="avatar-container flex w-12 items-center justify-center h-12 rounded-full bg-gray-500">avatar</div>
+                    <div className="avatar-container flex w-12 items-center justify-center h-12 rounded-full bg-gray-500">
+                        <img src="/photo.jpg" className='avatar-container flex w-12 items-center justify-center h-12 object-cover rounded-full bg-gray-500' alt="" />
+                    </div>
                     <div className="meta-news-container flex flex-col">
                         <span className="username leading-3 font-bold text-gray-700">{data.user}</span>
                         <span className="text-xs text-gray-600 font-semibold">{data.hour}</span>
@@ -57,15 +74,26 @@ function News() {
                     <div className="text-container">{data.description}</div>
                 </div>
                 <div className="footer-news-component">
-                    <div className="btn-row-container">
-                        <button onClick={handleLikeClick} className="rounded-btn flex p-1 border rounded-md bg-gray-100 hover:bg-gray-300">
-                            <span className='flex '>{likes}</span>
-                            <HiOutlineHeart/>
-                        </button>
-                        <button className="rounded-btn p-1 border rounded-md bg-gray-100 hover:bg-gray-300">
-                           
-                            <span>0</span>
-                            <span>comment</span>
+                    <div className="btn-row-container flex">
+                        <div className='relative flex items-center justify-center'>
+                            <button onClick={handleLikeClick} className="m-2 justify-center flex items-center rounded-btn p-1 rounded-md">
+                                <span className='absolute bottom-9'>{totalLike === 0 ? null : totalLike}</span>
+                                {
+                                    liked 
+                                    ? <AiFillHeart  className='w-6 h-6 text-red-600'/>
+                                    : <HiOutlineHeart className='w-6 h-6'/>
+                                }
+                                </button>
+                        </div>
+                        
+                        <button className="m-2 rounded-btn p-1 rounded-md " 
+                                onClick={handleClickComment}>
+                            <span className='absolute bottom-9'></span>
+                                {
+                                    openedComment
+                                    ? <BiSolidComment  className='w-6 h-6'/>
+                                    : <BiCommentDots className='w-6 h-6'/>
+                                }
                         </button>
                     </div>
                 </div>
