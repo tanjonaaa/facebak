@@ -7,7 +7,7 @@ function App() {
   return (
     <BrowserRouter>
         <Navbar />
-        <div className='h-12'/>
+        <div className='h-12 pt-1'/>
         <Routes>
             <Route path="/" Component={NewsFeed}/>
         </Routes>

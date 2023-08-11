@@ -1,6 +1,5 @@
 export function News({data}) {
     return (
-
         <section className="news-component flex bg-white flex-col p-4 gap-4 border rounded-xl" id="multiplier">
             <div className="header-news-component flex gap-2 items-center">
                 <div className="avatar-container flex w-12 items-center justify-center h-12 rounded-full bg-gray-500">avatar</div>

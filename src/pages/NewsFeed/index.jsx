@@ -6,9 +6,12 @@ export const NewsFeed = () => {
     const [posts, setPosts] = useState([]);
 
     const fetchPosts = async () => {
-        const posts = await getPosts();
-
-        setPosts(posts.data);
+        try {
+            const posts = await getPosts();
+            setPosts(posts);
+        }catch (e){
+            console.log(e);
+        }
     }
 
     useEffect(() => {
