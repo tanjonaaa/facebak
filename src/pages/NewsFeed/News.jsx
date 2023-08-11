@@ -2,8 +2,12 @@ import React, {useState} from "react";
 import {AiFillHeart} from "react-icons/ai";
 import {HiOutlineHeart} from "react-icons/hi";
 import {BiCommentDots, BiSolidComment} from "react-icons/bi";
+import {createPortal} from "react-dom";
+import CommentPostModal from "./CommentPostModal";
+import TimesAgo from "../../utils/TimesAgo";
 
 export function News({data}) {
+    const [portal,setPortal] = useState(null);
     const [totalLike,setTotalLike] = useState(0);
 
     // Create a state variable for likes
@@ -24,8 +28,18 @@ export function News({data}) {
 
     const [openedComment,setOpenComment] = useState(false);
 
+    const handleCloseModal = () => {
+        setPortal(null);
+    }
+
     const handleClickComment = () => {
         setOpenComment(!openedComment);
+        setPortal(
+            createPortal(
+                <CommentPostModal onClose={handleCloseModal} data={data}/>,
+                document.getElementById("portal-comment")
+            )
+        )
     }
 
     return (
@@ -36,19 +50,18 @@ export function News({data}) {
                 </div>
                 <div className="meta-news-container flex flex-col">
                     <span className="username leading-3 font-bold text-gray-700">{data.username}</span>
-                    <span className="text-xs text-gray-600 font-semibold">{data.hour}</span>
+                    <span className="text-xs text-gray-600 font-semibold">{TimesAgo(data.updatedAt)}</span>
                 </div>
             </div>
             <div className="news-content">
-
                 <div className="text-container">{data.content}</div>
             </div>
             <div className="footer-news-component">
                 <div className="btn-row-container flex">
                     <div className='relative flex items-center justify-center'>
                         <button onClick={handleLikeClick} className="m-2 justify-center flex items-center rounded-btn p-1 rounded-md">
+                            <span className='absolute bottom-6'>{totalLike === 0 ? null : totalLike}</span>
 
-                            <span className='absolute bottom-9'>{totalLike === 0 ? null : totalLike}</span>
                             {
                                 liked
                                     ? <AiFillHeart  className='w-6 h-6 text-red-600'/>
@@ -69,6 +82,8 @@ export function News({data}) {
                     </button>
                 </div>
             </div>
+
+            { portal }
         </section>
     )
 }
