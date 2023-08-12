@@ -1,6 +1,6 @@
 export const Navbar = () => {
     return (
-        <header className="flex p-2.5 py-3.5 fixed w-full bg-white border-b">
+        <header className="flex p-2.5 py-3.5 fixed w-full bg-white border-b z-50">
             <div className="flex justify-between w-full">
                 <a href="/#">Facebak</a>
                 <div>

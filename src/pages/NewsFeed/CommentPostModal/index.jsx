@@ -2,19 +2,20 @@ import FormAddPost from "./formAddPost";
 import {CgClose} from "react-icons/cg";
 import style from "./index.module.css";
 import CommentContent from "./commentContent";
-export default function CommentPostModal({children,}){
-    const comments = [
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-        {username: "John doe", content: "This is just a test"},
-    ];
+import {useEffect, useState} from "react";
+import {getCommentById} from "../../../utils/fetcher";
+export default function CommentPostModal({children,onClose,data}){
+    const [comments, setComments] = useState([]);
 
-    const handleCloseModal = () => {}
+    const fetchComments = async () => {
+        const comments = await getCommentById(data.id);
+
+        setComments(comments);
+    }
+
+    useEffect(() => {
+        fetchComments();
+    }, [])
 
     const handleAddComment = () => {}
 
@@ -24,7 +25,7 @@ export default function CommentPostModal({children,}){
 
             <div className={"bg-white p-1.5 rounded-lg z-10 flex flex-col gap-1 " + style.commentContainer}>
                 <div className="w-full flex items-center justify-between">
-                    <button className="text-blue-800" onClick={handleCloseModal}>
+                    <button className="text-blue-800" onClick={onClose}>
                         <CgClose className="w-5 h-5"/>
                     </button>
 
@@ -41,6 +42,7 @@ export default function CommentPostModal({children,}){
                         <hr className="h-0.5 bg-gray-300 border-0 my-2 mr-1.5"/>
                         <div className="w-full flex flex-col">
                             {
+                                comments.length == 0 ? <p>Pas de commentaires</p> :
                                 comments.map(v => (
                                     <CommentContent data={v}/>
                                 ))
