@@ -1,10 +1,6 @@
 import React, {useState} from "react";
-import {AiFillHeart} from "react-icons/ai";
-import {HiOutlineHeart} from "react-icons/hi";
-import {BiCommentDots, BiSolidComment} from "react-icons/bi";
 import {createPortal} from "react-dom";
 import CommentPostModal from "../CommentPostModal";
-import TimesAgo from "../../../utils/TimesAgo";
 import {FooterNews} from "./FooterNews";
 import {HeaderNews} from "./HeaderNews";
 
