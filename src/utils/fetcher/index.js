@@ -55,19 +55,19 @@ const getPosts = async () => {
 
 const getPostById = async (uuid) => {
     return (await axios.get(
-        host.concat( "/posts/", uuid )
+        `${host}/posts/${uuid}`
     )).data;
 }
 
 const createPostOrUpdate = async (post) => {
     return (await axios.post(
-        host.concat( "/posts" ),
+    `${host}/posts`,
         post,
     )).data
 }
 
 const postComment = async (postId,content) => {
-    return (await axios.post( host.concat( "/posts/", postId, "/comments" ), {postId, content} )).data;
+    return (await axios.post( `${host}/posts/${postId}/comments`, {postId, content} )).data;
 }
 
 const getCommentById = async (postId) => {
