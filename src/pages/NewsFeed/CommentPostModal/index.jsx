@@ -3,19 +3,24 @@ import {CgClose} from "react-icons/cg";
 import style from "./index.module.css";
 import CommentContent from "./commentContent";
 import {useEffect, useState} from "react";
-import {getCommentById} from "../../../utils/fetcher";
-export default function CommentPostModal({children,onClose,data}){
+import {getCommentById} from "../../../utils/fetcher/posts";
+export default function CommentPostModal({children,onClose,parentProps}){
     const [comments, setComments] = useState([]);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchComments = async () => {
-        const comments = await getCommentById(data.id);
-
-        setComments(comments);
+        try{
+            return await getCommentById(parentProps.data.id);
+        }catch (e){
+            console.log(e);
+        }
     }
 
     useEffect(() => {
-        fetchComments();
-    }, [])
+        fetchComments().then(res => {
+            setComments(res);
+        });
+    }, [fetchComments])
 
     const handleAddComment = () => {}
 
@@ -29,22 +34,21 @@ export default function CommentPostModal({children,onClose,data}){
                         <CgClose className="w-5 h-5"/>
                     </button>
 
-                    <div className="px-2 text-md font-medium text-zinc-400">Username</div>
+                    <div className="px-2 text-md font-bold text-zinc-400">{parentProps.user.username}</div>
                 </div>
 
                 <div className="h-full w-full overflow-x-hidden overflow-y-auto">
                     <div className="absolute w-full">
-                        {/* copy of post here */}
-                        Replace this text to copy of post component
+                        {parentProps.data.content}
                         {children}
 
                         {/* comment container */}
                         <hr className="h-0.5 bg-gray-300 border-0 my-2 mr-1.5"/>
                         <div className="w-full flex flex-col">
                             {
-                                comments.length == 0 ? <p>Pas de commentaires</p> :
+                                comments.length === 0 ? <p>Pas de commentaires</p> :
                                 comments.map(v => (
-                                    <CommentContent data={v}/>
+                                    <CommentContent key={v.id} data={v}/>
                                 ))
                             }
                         </div>

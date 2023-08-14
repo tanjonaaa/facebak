@@ -1,21 +1,22 @@
-import { useEffect, useState } from "react";
-import {getPosts} from '../../utils/fetcher';
-import { Index } from "./News";
+import {useEffect, useState} from "react";
+import {Index} from "./News";
+import {getPosts} from "../../utils/fetcher/posts";
 
 export const NewsFeed = () => {
     const [posts, setPosts] = useState([]);
 
     const fetchPosts = async () => {
-        try {
-            const posts = await getPosts();
-            setPosts(posts);
-        }catch (e){
-            console.log(e);
+        try{
+            return await getPosts();
+        }catch (e) {
+            console.log(e)
         }
     }
 
     useEffect(() => {
-        fetchPosts();
+        fetchPosts().then(posts => {
+            setPosts(posts)
+        });
     }, [])
 
     return (

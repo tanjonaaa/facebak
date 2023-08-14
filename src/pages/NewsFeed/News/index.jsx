@@ -1,13 +1,31 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {createPortal} from "react-dom";
 import CommentPostModal from "../CommentPostModal";
 import {FooterNews} from "./FooterNews";
 import {HeaderNews} from "./HeaderNews";
+import {getUserById} from "../../../utils/fetcher/users";
+
 
 export function Index({data}) {
     const [portal,setPortal] = useState(null);
     const [totalLike,setTotalLike] = useState(0);
+    const [user, setUser] = useState({});
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const fetchUser = async () => {
+        try{
+           return await getUserById(data.userId);
+        }catch(e){
+            console.log(e)
+        }
+    }
+    
+    useEffect(() => {
+        fetchUser().then(res => {
+            setUser(res);
+        })
+    }, [])
+    
     // Create a state variable for likes
     const [liked, setLikes] = useState(false);
 
@@ -34,7 +52,12 @@ export function Index({data}) {
         setOpenComment(!openedComment);
         setPortal(
             createPortal(
-                <CommentPostModal onClose={handleCloseModal} data={data}/>,
+                <CommentPostModal onClose={handleCloseModal}
+                                  parentProps={{
+                                      data: data,
+                                      user: user
+                                  }}
+                />,
                 document.getElementById("portal-comment")
             )
         )
@@ -49,7 +72,8 @@ export function Index({data}) {
             <HeaderNews
                 parentData={
                     {
-                        username: data.username,
+                        username: user.username,
+                        avatar: user.photo,
                         updatedAt: data.updatedAt
                     }
                 }
