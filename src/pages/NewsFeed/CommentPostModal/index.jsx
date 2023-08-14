@@ -4,11 +4,11 @@ import style from "./index.module.css";
 import CommentContent from "./commentContent";
 import {useEffect, useState} from "react";
 import {getCommentById} from "../../../utils/fetcher";
-export default function CommentPostModal({children,onClose,data}){
+export default function CommentPostModal({children,onClose,parentProps}){
     const [comments, setComments] = useState([]);
 
     const fetchComments = async () => {
-        const comments = await getCommentById(data.id);
+        const comments = await getCommentById(parentProps.data.id);
 
         setComments(comments);
     }
@@ -29,7 +29,7 @@ export default function CommentPostModal({children,onClose,data}){
                         <CgClose className="w-5 h-5"/>
                     </button>
 
-                    <div className="px-2 text-md font-medium text-zinc-400">Username</div>
+                    <div className="px-2 text-md font-medium text-zinc-400">{parentProps.user.username}</div>
                 </div>
 
                 <div className="h-full w-full overflow-x-hidden overflow-y-auto">
