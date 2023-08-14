@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
-import {getPosts} from '../../utils/fetcher';
 import {Index} from "./News";
+import {getPosts} from "../../utils/fetcher/posts";
 
 export const NewsFeed = () => {
     const [posts, setPosts] = useState([]);

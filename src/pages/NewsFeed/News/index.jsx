@@ -3,7 +3,8 @@ import {createPortal} from "react-dom";
 import CommentPostModal from "../CommentPostModal";
 import {FooterNews} from "./FooterNews";
 import {HeaderNews} from "./HeaderNews";
-import {getUserById} from "../../../utils/fetcher";
+import {getUserById} from "../../../utils/fetcher/users";
+
 
 export function Index({data}) {
     const [portal,setPortal] = useState(null);
@@ -13,7 +14,7 @@ export function Index({data}) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchUser = async () => {
         try{
-           return await getUserById(data.userId); 
+           return await getUserById(data.userId);
         }catch(e){
             console.log(e)
         }

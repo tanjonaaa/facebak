@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getUserById} from "../../../../utils/fetcher";
+import {getUserById} from "../../../../utils/fetcher/users";
 
 export default function CommentContent({data}){
     const [user, setUser] = useState({});
