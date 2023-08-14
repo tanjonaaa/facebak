@@ -4,13 +4,13 @@ import style from "./index.module.css";
 import CommentContent from "./commentContent";
 import {useEffect, useState} from "react";
 import {getCommentById} from "../../../utils/fetcher/posts";
-export default function CommentPostModal({children,onClose,parentProps}){
+export default function CommentPostModal({children,onClose,data}){
     const [comments, setComments] = useState([]);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchComments = async () => {
         try{
-            return await getCommentById(parentProps.data.id);
+            return await getCommentById(data.id);
         }catch (e){
             console.log(e);
         }
@@ -34,12 +34,12 @@ export default function CommentPostModal({children,onClose,parentProps}){
                         <CgClose className="w-5 h-5"/>
                     </button>
 
-                    <div className="px-2 text-md font-bold text-zinc-400">{parentProps.user.username}</div>
+                    <div className="px-2 text-md font-bold text-zinc-400">{data.user.username}</div>
                 </div>
 
                 <div className="h-full w-full overflow-x-hidden overflow-y-auto">
                     <div className="absolute w-full">
-                        {parentProps.data.content}
+                        {data.content}
                         {children}
 
                         {/* comment container */}
