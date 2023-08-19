@@ -7,11 +7,14 @@ export default function FormAddPost({onAddComment}){
 
     const handleSubmit = ev => {
         ev.preventDefault();
-        if(onAddComment) onAddComment(content);
+        if(onAddComment){
+            onAddComment(content.content);
+            setContent(prev => ({...prev,content: ''}));
+        }
     }
 
     const handleChange = ev => {
-        setContent(prev => ({...prev,content: ev.value}));
+        setContent(prev => ({...prev,content: ev.target.value}));
         if(ev.target.value.trim().length > 0){
             setWriting(true);
         }else {

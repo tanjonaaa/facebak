@@ -2,10 +2,12 @@ import FormAddPost from "./formAddPost";
 import {CgClose} from "react-icons/cg";
 import style from "./index.module.css";
 import CommentContent from "./commentContent";
-import {useEffect, useState} from "react";
-import {getCommentById} from "../../../utils/fetcher/posts";
+import {useContext, useEffect, useState} from "react";
+import {getCommentById, postComment} from "../../../utils/fetcher/posts";
+import {clientContext} from "../../../utils/context";
 export default function CommentPostModal({children,onClose,parentProps}){
     const [comments, setComments] = useState([]);
+    const {userId} = useContext(clientContext);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchComments = async () => {
@@ -20,9 +22,13 @@ export default function CommentPostModal({children,onClose,parentProps}){
         fetchComments().then(res => {
             setComments(res);
         });
-    }, [fetchComments])
+    }, [])
 
-    const handleAddComment = () => {}
+    const handleAddComment = (content) => {
+        postComment(parentProps.data.id, content, userId).then(res => {
+            setComments(prev => [...prev, res]);
+        })
+    }
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50">

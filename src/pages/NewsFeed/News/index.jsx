@@ -9,22 +9,6 @@ import {getUserById} from "../../../utils/fetcher/users";
 export function Index({data}) {
     const [portal,setPortal] = useState(null);
     const [totalLike,setTotalLike] = useState(0);
-    const [user, setUser] = useState({});
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const fetchUser = async () => {
-        try{
-           return await getUserById(data.userId);
-        }catch(e){
-            console.log(e)
-        }
-    }
-    
-    useEffect(() => {
-        fetchUser().then(res => {
-            setUser(res);
-        })
-    }, [])
     
     // Create a state variable for likes
     const [liked, setLikes] = useState(false);
@@ -55,7 +39,7 @@ export function Index({data}) {
                 <CommentPostModal onClose={handleCloseModal}
                                   parentProps={{
                                       data: data,
-                                      user: user
+                                      user: data.user
                                   }}
                 />,
                 document.getElementById("portal-comment")
@@ -72,8 +56,8 @@ export function Index({data}) {
             <HeaderNews
                 parentData={
                     {
-                        username: user.username,
-                        avatar: user.photo,
+                        username: data.user.username,
+                        avatar: data.user.photo,
                         updatedAt: data.updatedAt
                     }
                 }

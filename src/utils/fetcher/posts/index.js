@@ -1,4 +1,4 @@
-import {getRequest, postRequest} from "../methods";
+import {getRequest, postRequest, putRequest} from "../methods";
 import axios from "axios";
 
 const host = 'http://localhost:8080';
@@ -14,8 +14,8 @@ export const createPostOrUpdate = async (post) => {
     return await postRequest(`${host}/posts`, post);
 }
 
-export const postComment = async (postId,content) => {
-    return await postRequest( `${host}/posts/${postId}/comments`, {postId, content} );
+export const postComment = async (postId,content,userId) => {
+    return await putRequest( `${host}/posts/${postId}/comments`, {content: content, userId: userId, postId: postId} );
 }
 
 export const getCommentById = async (postId) => {
