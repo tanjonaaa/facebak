@@ -1,6 +1,11 @@
 import {useEffect, useState} from "react";
-import {Index} from "./News";
+import {News} from "./News/news";
 import {getPosts} from "../../utils/fetcher/posts";
+import AsideLeft from "./asideLeft";
+import AddPost from "./AddPost";
+import AsideRight from "./AsideRight";
+import {Navbar} from "../../components/Navbar";
+import NewsSkeleton from "./NewsSkeleton";
 
 export const NewsFeed = () => {
     const [posts, setPosts] = useState([]);
@@ -20,22 +25,30 @@ export const NewsFeed = () => {
     }, [])
 
     return (
-        <div className="w-full flex mt-4" id="portal-comment">
-            <aside className="asideEmpty w-3/12 flex-shrink-0 p-2 h-screen">
-                <div className="asidePadded w-100"></div>
-            </aside>
+        <>
+            <Navbar />
+            <div className="w-full flex mt-14" id="portal-comment">
+                <AsideLeft/>
 
-            <main className="mainPage flex flex-col gap-4 w-full">
-                {posts.map(post => {
-                    return (
-                        <Index key={post.id} data={post}/>
-                    );
-                })}
-            </main>
+                <main className="mainPage flex flex-col gap-4 w-full">
+                    <AddPost/>
 
-            <aside className="asideEmpty w-3/12 flex-shrink-0 p-2 h-screen">
-                <div className="asidePadded w-100"></div>
-            </aside>
-        </div>
+                    {
+                        (posts && posts.length)
+                            ? posts.map(post => (
+                                <News key={post.id} data={post}/>
+                            ))
+                            : (
+                                <>
+                                    <NewsSkeleton/>
+                                    <NewsSkeleton/>
+                                </>
+                            )
+                    }
+                </main>
+
+                <AsideRight/>
+            </div>
+        </>
     );
 }

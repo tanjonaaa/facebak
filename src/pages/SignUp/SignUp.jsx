@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import axios from "axios";
 function SignUp() {
-        const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
-        const handlePasswordVisibility = () => {
-            setShowPassword(!showPassword);
-        }
+    const handlePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    }
 
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -42,8 +42,13 @@ function SignUp() {
 
 
     return(
-        <>
-            <section onClick={handleSubmit} className="bg-rich-black dark:bg-prussian-blue">
+        <div className="flex w-full">
+            <div className="w-3/5 flex items-center px-2">
+                <img alt="illustration"
+                     src="/illustrations/Connected%20world-amico.svg"/>
+            </div>
+            <div className="w-full flex">
+
                 <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                     <a href="/#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-prussian-blue">
                         <img className="w-12 h-12 mr-2" src="/logo1.png" alt="logo"/>
@@ -86,12 +91,12 @@ function SignUp() {
                                     </div>
                                 </div>
                                 <div className="bg-picton-blue rounded-lg border-none">
-                                <button
-                                    type="submit" onClick={handleSubmit}
-                                    className="w-full bg-cerulean border-none hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700"
-                                >
-                                    Create an account
-                                </button>
+                                    <button
+                                        type="submit" onClick={handleSubmit}
+                                        className="w-full bg-cerulean border-none hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700"
+                                    >
+                                        Create an account
+                                    </button>
                                 </div>
 
                                 <p className="text-sm font-light text-white dark:text-white">
@@ -101,8 +106,8 @@ function SignUp() {
                         </div>
                     </div>
                 </div>
-            </section>
-        </>
+            </div>
+        </div>
     );
 }
 export default SignUp

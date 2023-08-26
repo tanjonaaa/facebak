@@ -7,7 +7,7 @@ export default function FormAddPost({onAddComment}){
 
     const handleSubmit = ev => {
         ev.preventDefault();
-        if(onAddComment){
+        if(onAddComment && content.content.trim().length){
             onAddComment(content.content);
             setContent(prev => ({...prev,content: ''}));
         }
