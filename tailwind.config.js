@@ -9,6 +9,7 @@ module.exports = {
       "cerulean": "#007ea7ff",
       "picton-blue": "#00a8e8ff",
       "white" : "#ffffffff",
+      "hex": "#e0e0f0",
     },
     extend: {},
   },
