@@ -17,7 +17,7 @@ const sendReactionToPost = async (postUuid,data) => {
 const deleteAReaction = async (postUuid,data) => {
     return (await axios.delete(
         `${host}/posts/${postUuid}/reactions`,
-        {...data}
+        {data: data}
     )).data
 }
 
