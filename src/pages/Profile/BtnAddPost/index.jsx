@@ -15,6 +15,10 @@ const BtnAddPost = () => {
         setPortal(false);
     }
 
+    const handleAddedPost = () => {
+        setPortal(false);
+    }
+
     return (
         <>
             <button className="text-white rounded-md bg-orange-500 py-1 px-2 flex items-center gap-2 hover:bg-orange-400"
@@ -26,6 +30,7 @@ const BtnAddPost = () => {
                 portal && (
                     createPortal(
                         <AddPostModal onCancel={handleClose}
+                                      onAddedPost={handleAddedPost}
                                       userId={userId}/>,
                         document.getElementById("post-page")
                     )

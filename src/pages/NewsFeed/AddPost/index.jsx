@@ -1,13 +1,24 @@
 import {BiSmile} from "react-icons/bi";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {createPortal} from "react-dom";
 import AddPostModal from "../../../components/AddPostModal";
+import {clientContext} from "../../../utils/context";
 
-const AddPost = () => {
+const AddPost = ({setPosts}) => {
+    const {userId,userData} = useContext(clientContext);
     const [portal,setPortal] = useState(false);
     const handleAddPost = () => {
         setPortal(prev => !prev);
     }
+
+    const handleCancel = () => {
+        setPortal(false);
+    }
+    const handleAddedPost = form => {
+        setPosts(prev => [{...form,user: userData},...prev]) // ensure to add all data
+        setPortal(false);
+    }
+
     return (
         <>
             <div className="flex gap-2 p-3 items-center select-none shadow-md m-2 rounded-md hover:shadow-lg transition"
@@ -21,7 +32,9 @@ const AddPost = () => {
             {
                 portal && (
                     createPortal(
-                        <AddPostModal/>,
+                        <AddPostModal onCancel={handleCancel}
+                                      userId={userId}
+                                      onAddedPost={handleAddedPost}/>,
                         document.getElementById("portal-comment")
                     )
                 )

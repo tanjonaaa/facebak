@@ -1,7 +1,10 @@
-import {FaPaperPlane, FaSmileBeam} from "react-icons/fa";
-import {useState} from "react";
+import {FaPaperPlane, FaSmileBeam, FaUser} from "react-icons/fa";
+import {useContext, useState} from "react";
+import {clientContext} from "../../../../utils/context";
+import useImageChecker from "../../../../utils/hooks/useImageChecker";
 
 export default function FormAddPost({onAddComment}){
+    const {userData} = useContext(clientContext);
     const [isWriting,setWriting] = useState(false);
     const [content,setContent] = useState({content: ''});
 
@@ -12,6 +15,14 @@ export default function FormAddPost({onAddComment}){
             setContent(prev => ({...prev,content: ''}));
         }
     }
+
+    const ProfileImage = useImageChecker(
+        (userData && userData.photo) ? userData.photo : '',
+        <FaUser className="w-6 h-6"/>,
+        {
+            className: 'w-full h-full object-cover'
+        }
+    )
 
     const handleChange = ev => {
         setContent(prev => ({...prev,content: ev.target.value}));
@@ -25,8 +36,8 @@ export default function FormAddPost({onAddComment}){
     return (
         <div className="flex gap-2 w-full bg-gray-300 p-3 rounded-md">
             <div className="w-12 h-12 flex items-center justify-center
-                    flex-shrink-0 rounded-full bg-gray-500">
-                {/* Avatar image here */}
+                    flex-shrink-0 rounded-full bg-gray-500 overflow-hidden">
+                { ProfileImage }
             </div>
             <form className="w-full flex items-center gap-2" onSubmit={handleSubmit}>
                 <input type="text"
