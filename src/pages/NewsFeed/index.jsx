@@ -20,7 +20,7 @@ export const NewsFeed = () => {
 
     useEffect(() => {
         fetchPosts().then(posts => {
-            setPosts(posts)
+            setPosts(posts.reverse()) // sort by most recent to old
         });
     }, [])
 
@@ -31,11 +31,12 @@ export const NewsFeed = () => {
                 <AsideLeft/>
 
                 <main className="mainPage flex flex-col gap-4 w-full">
-                    <AddPost/>
+                    <AddPost setPosts={setPosts}/>
 
                     {
                         (posts && posts.length)
-                            ? posts.map(post => (
+                            ? posts
+                                .map(post => (
                                 <News key={post.id} data={post}/>
                             ))
                             : (

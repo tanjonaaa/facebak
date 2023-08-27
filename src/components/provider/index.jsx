@@ -4,7 +4,7 @@ import {getUserById} from "../../utils/fetcher/users";
 
 const ClientProvider = ({children}) => {
     const [userData,setUserData] = useState({});
-    const userId = '9b12d8e1-75b4-44e9-939f-e35807a27d35'; // add some features like this
+    const userId = 'de5b5a7f-d145-45a3-b0a1-ae2b5bb330fc'; // add some features like this
 
     const fetchUser = async () => {
         try {
@@ -26,7 +26,8 @@ const ClientProvider = ({children}) => {
     return (
         <clientContext.Provider value={{
             userId,
-            userData
+            userData,
+            setUserData
         }}>
             {children}
         </clientContext.Provider>

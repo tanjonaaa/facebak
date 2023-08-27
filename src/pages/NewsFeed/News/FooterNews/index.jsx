@@ -38,7 +38,9 @@ export const FooterNews = ({parentProps}) => {
                                 ? <AiFillHeart  className='w-6 h-6 text-red-600'/>
                                 : <HiOutlineHeart className='w-6 h-6'/>
                         }
-                        <span className='absolute top-6'>{parentProps.totalLike === 0 ? null : parentProps.totalLike}</span>
+                        <span className='absolute top-6'>
+                            {parentProps.totalLike === 0 ? null : parentProps.totalLike}
+                        </span>
                     </button>
 
                 </div>

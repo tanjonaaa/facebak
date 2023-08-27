@@ -11,7 +11,7 @@ export const getPostById = async (uuid) => {
 }
 
 export const createPostOrUpdate = async (post) => {
-    return await postRequest(`${host}/posts`, post);
+    return await putRequest(`${host}/posts`, post);
 }
 
 export const postComment = async (postId,content,userId) => {

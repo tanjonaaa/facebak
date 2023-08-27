@@ -1,46 +1,27 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from "react";
 import {createPortal} from "react-dom";
 import CommentPostModal from "../CommentPostModal";
 import {FooterNews} from "./FooterNews";
 import {HeaderNews} from "./HeaderNews";
-import {deleteAReaction, getReaction, sendReactionToPost} from "../../../utils/fetcher/reactions";
+import {deleteAReaction, sendReactionToPost} from "../../../utils/fetcher/reactions";
 import {clientContext} from "../../../utils/context";
 
 export function News({data}) {
     const {userId} = useContext(clientContext);
     const [portal,setPortal] = useState(null);
-    const [totalLike,setTotalLike] = useState(null);
-
-    useEffect(() => {
-        if(data.id){
-            getReaction(data.id)
-                .then(v => {
-                    const data = v.filter(like => {
-                        return like.type === 'LIKE'
-                    });
-                    if(totalLike === null) setTotalLike(data.length);
-                })
-                .catch(e => {
-                    console.log(e);
-                })
-        }
-    })
-
-    // Create a state variable for likes
+    const [totalLike,setTotalLike] = useState(data._count.reactions);
     const [liked, setLikes] = useState(false);
-
-    // Create a function to handle the click event
 
     const handleLikeClick = () => {
         (async () => {
             try {
-                let accumulator;
 
+                let accumulator;
                 if(!liked){
                     const isSet = await sendReactionToPost( data.id, {type: 'LIKE', userId} )
                     if(isSet) accumulator = 1;
                 }else {
-                    const isDeleted = await deleteAReaction( data.id, {type: 'LIKE', userId} )
+                    const isDeleted = await deleteAReaction( data.id, { userId } )
                     if (isDeleted) accumulator = -1;
                 }
 

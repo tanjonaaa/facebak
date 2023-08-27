@@ -22,7 +22,7 @@ export default function CommentPostModal({children,onClose,parentProps}){
         fetchComments().then(res => {
             setComments(res);
         });
-    }, [])
+    })
 
     const handleAddComment = (content) => {
         postComment(parentProps.data.id, content, userId).then(res => {
@@ -52,10 +52,18 @@ export default function CommentPostModal({children,onClose,parentProps}){
                         <hr className="h-0.5 bg-gray-300 border-0 my-2 mr-1.5"/>
                         <div className="w-full flex flex-col">
                             {
-                                comments.length === 0 ? <p>Pas de commentaires</p> :
-                                comments.map(v => (
-                                    <CommentContent key={v.id} data={v}/>
-                                ))
+                                comments.length === 0
+                                    ? (
+                                        <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+                                            <img src="/illustrations/Feedback-pana.svg"
+                                                 className="w-1/3"
+                                                 alt="no comment"/>
+                                            <span>No comments</span>
+                                        </div>
+                                    )
+                                    : comments.map(v => (
+                                        <CommentContent key={v.id} data={v}/>
+                                    ))
                             }
                         </div>
                     </div>
