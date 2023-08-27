@@ -26,9 +26,10 @@ export const Login = () => {
         } else {
             login(formData).then(res => {
                 Cookies.set("identityToken", res.token);
-                Cookies.set("loggedUser", Object.fromEntries(
+                const loggedUser = Object.fromEntries(
                     Object.entries(res).filter(([key]) => key !== "token")
-                ));
+                );
+                Cookies.set("loggedUser", JSON.stringify(loggedUser));
             })
         }
     }
