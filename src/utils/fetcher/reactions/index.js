@@ -21,4 +21,10 @@ const deleteAReaction = async (postUuid,data) => {
     )).data
 }
 
+export {
+    getReaction,
+    sendReactionToPost,
+    deleteAReaction
+}
+
 
