@@ -21,9 +21,9 @@ export const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(formData.email == "" || formData.password == ""){
+        if (formData.email == "" || formData.password == "") {
             alert("Vous devez fournir un email et un mot de passe");
-        }else{
+        } else {
             login(formData).then(res => {
                 Cookies.set("identityToken", res.token);
                 Cookies.set("loggedUser", Object.fromEntries(
@@ -34,15 +34,15 @@ export const Login = () => {
     }
 
     return (
-        <section className="bg-rich-black dark:bg-hex flex items-center justify-center">
-            <img src="/illustrations/Connected world-amico.svg" className="w-1/3" alt="coucou" />
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-                <div className="w-full bg-hex rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-white dark:border-hex">
-                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-picton-blue">
+        <section className="dark:bg-hex flex items-center justify-center h-screen">
+            <img src="/illustrations/Connected world-amico.svg" className="w-1/3 ml-2" alt="coucou" />
+            <div className="w-2/5 flex flex-col items-center justify-center px-6 py-8 mx-auto">
+                <div className="w-full bg-hex rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-white dark:border-hex">
+                    <div className="p-8 space-y-6">
+                        <h1 className="text-2xl font-bold leading-tight tracking-tight text-gray-900 md:text-3xl dark:text-picton-blue">
                             Sign in
                         </h1>
-                        <form className="space-y-4 md:space-y-6" action="#"onSubmit={handleSubmit}>
+                        <form className="space-y-6" action="#" onSubmit={handleSubmit}>
                             <EmailInput value={formData.email} onChange={handleChange} />
                             <PasswordInput
                                 value={formData.password}
