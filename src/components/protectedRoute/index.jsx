@@ -2,7 +2,6 @@ import {useEffect} from "react";
 import {isAuthenticated} from "../../utils/restricts";
 import {useNavigate} from "react-router-dom";
 
-
 const ProtectedRoute = ({ children }) => {
     const navigate = useNavigate();
 
@@ -11,6 +10,8 @@ const ProtectedRoute = ({ children }) => {
             navigate('/login');
         }
     }, [navigate]);
+
+    console.log(isAuthenticated);
 
     return isAuthenticated ? children : null;
 };
