@@ -12,8 +12,8 @@ const AddPostModal = ({onAddPost,onCancel,userId,onAddedPost}) => {
     const handleSubmit = ev => {
         ev.preventDefault();
         createPostOrUpdate(form)
-        .then(() => {
-            if(onAddedPost) onAddedPost(form);
+        .then((ev) => {
+            if(onAddedPost) onAddedPost(ev);
         })
         .catch(e => {
             console.log(e);
