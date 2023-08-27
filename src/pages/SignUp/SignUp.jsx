@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import {createUser, updateUser} from "../../utils/fetcher/users";
+import {createUser} from "../../utils/fetcher/users";
 
 import EmailInput from './EmailInput';
 import PasswordInput from './PasswordInput';
 import ConfirmPasswordInput from './ConfirmPasswordInput';
 import UsernameInput from './UsernameInput';
+import {Link} from "react-router-dom";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -63,8 +64,10 @@ const SignUp = () => {
     };
 
     return (
-        <section className="dark:bg-hex flex items-center justify-center h-screen">
-            <img src="/illustrations/Connected world-amico.svg" className="w-1/3 ml-2" alt="coucou" />
+        <section className="bg-hex flex items-center justify-center min-h-screen">
+            <img src="/illustrations/Connected world-amico.svg"
+                 className="w-1/3 ml-2"
+                 alt="coucou" />
             <div className="w-2/5 flex flex-col items-center justify-center px-6 py-8 mx-auto">
                 <div className="w-full bg-hex rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-white dark:border-hex">
                     <div className="p-8 space-y-6">
@@ -95,8 +98,12 @@ const SignUp = () => {
                                     Create an account
                                 </button>
                             </div>
-                            <p className="text-sm font-light text-rich-black dark:text-rich-black">
-                                Already have an account? <a href="/#" className="font-medium text-primary-600 hover:underline dark:text-picton-blue">Login here</a>
+                            <p className="text-md font-light text-rich-black dark:text-rich-black">
+                                Already have an account?&nbsp;
+                                <Link to="/login"
+                                      className="font-medium text-primary-600 hover:underline dark:text-picton-blue">
+                                    Login here
+                                </Link>
                             </p>
                         </form>
                     </div>

@@ -15,6 +15,7 @@ export function News({data}) {
     const handleLikeClick = () => {
         (async () => {
             try {
+
                 let accumulator;
                 if(!liked){
                     const isSet = await sendReactionToPost( data.id, {type: 'LIKE', userId} )
@@ -22,7 +23,6 @@ export function News({data}) {
                 }else {
                     const isDeleted = await deleteAReaction( data.id, { userId } )
                     if (isDeleted) accumulator = -1;
-                    console.log( {userId});
                 }
 
                 setTotalLike(value => {

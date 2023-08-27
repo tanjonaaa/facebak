@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import EmailInput from "../SignUp/EmailInput";
 import PasswordInput from "../SignUp/PasswordInput";
 import { login } from "../../utils/fetcher/users";
 import Cookies from "js-cookie";
+import {Link} from "react-router-dom";
 
 export const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -21,22 +22,31 @@ export const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData.email == "" || formData.password == "") {
+        if (formData.email === "" || formData.password === "") {
             alert("Vous devez fournir un email et un mot de passe");
         } else {
             login(formData).then(res => {
-                Cookies.set("identityToken", res.token);
+                // an alternative for is under this comment
+                /* Cookies.set("identityToken", res.token);
                 const loggedUser = Object.fromEntries(
                     Object.entries(res).filter(([key]) => key !== "token")
-                );
+                ); */
+                const {token, ...loggedUser} = res;
+                Cookies.set("identityToken", token);
                 Cookies.set("loggedUser", JSON.stringify(loggedUser));
             })
+                .catch(e => {
+                    alert(JSON.stringify(e.response.data))
+                    console.log("error on login:",e);
+                })
         }
     }
 
     return (
         <section className="dark:bg-hex flex items-center justify-center h-screen">
-            <img src="/illustrations/Connected world-amico.svg" className="w-1/3 ml-2" alt="coucou" />
+            <img src="/illustrations/Connected world-amico.svg"
+                 className="w-1/3 ml-2"
+                 alt="coucou" />
             <div className="w-2/5 flex flex-col items-center justify-center px-6 py-8 mx-auto">
                 <div className="w-full bg-hex rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-white dark:border-hex">
                     <div className="p-8 space-y-6">
@@ -59,6 +69,13 @@ export const Login = () => {
                                     Sign in
                                 </button>
                             </div>
+                            <p className="text-md font-light text-rich-black dark:text-rich-black">
+                                Already have an account?&nbsp;
+                                <Link to="/sign-up"
+                                      className="font-medium text-primary-600 hover:underline dark:text-picton-blue">
+                                    Sign in
+                                </Link>
+                            </p>
                         </form>
                     </div>
                 </div>
