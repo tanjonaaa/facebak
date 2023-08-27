@@ -14,7 +14,7 @@ const useImageChecker = (src, fallback, props = {}) => {
 
     useEffect(() => {
         isMounted.current = true;
-        let parseSrc = src.match(/^(\/)/)
+        let parseSrc = (src && src.match(/^(\/)/))
             // eslint-disable-next-line no-restricted-globals
             ? (location.origin + src)
             : src;
