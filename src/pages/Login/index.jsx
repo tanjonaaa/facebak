@@ -2,6 +2,7 @@ import { useState } from "react";
 import EmailInput from "../SignUp/EmailInput";
 import PasswordInput from "../SignUp/PasswordInput";
 import { login } from "../../utils/fetcher/users";
+import Cookies from "js-cookie";
 
 export const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -24,7 +25,10 @@ export const Login = () => {
             alert("Vous devez fournir un email et un mot de passe");
         }else{
             login(formData).then(res => {
-                console.log(res);
+                Cookies.set("identityToken", res.token);
+                Cookies.set("loggedUser", Object.fromEntries(
+                    Object.entries(res).filter(([key]) => key !== "token")
+                ));
             })
         }
     }
