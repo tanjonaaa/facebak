@@ -9,6 +9,10 @@ const BtnEdit = () => {
         setOpen(prev => !prev );
     }
 
+    const handleClose = () => {
+        setOpen(false);
+    }
+
     return (
         <>
             <button className="text-white rounded-md bg-blue-500 py-1 px-2 flex
@@ -19,7 +23,7 @@ const BtnEdit = () => {
             </button>
             {
                 open && createPortal(
-                    <ModalEditProfile/>,
+                    <ModalEditProfile onCancel={handleClose} onDone={handleClose}/>,
                     document.getElementById("post-page")
                 )
             }

@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import axios from "axios";
 
 /**
@@ -8,37 +8,33 @@ import axios from "axios";
  * @param {{}} props image's props
  * @return {JSX.Element}
  */
-const useImageChecker = (src, fallback, props = {} ) => {
-    const [fetched,setFetched] = useState(false);
-    const [hasImage,setHasImage] = useState(
-        fallback
-            ? fallback
-            : "loading..."
-    );
+const useImageChecker = (src, fallback, props = {}) => {
+    const isMounted = useRef(false);
+    const [hasImage, setHasImage] = useState(fallback || "loading...");
 
     useEffect(() => {
-        if(!fetched && src) {
+        isMounted.current = true;
+        let parseSrc = src.match(/^(\/)/)
+            // eslint-disable-next-line no-restricted-globals
+            ? (location.origin + src)
+            : src;
 
-            let parseSrc = src.match( /^(\/)/ )
-                // eslint-disable-next-line no-restricted-globals
-                ? (location.origin + src)
-                : src;
+        axios.head(parseSrc)
+            .then(() => {
+                if (isMounted.current) {
+                    setHasImage(<img src={src} alt="pic" {...props} />);
+                }
+            })
+            .catch(e => {
+                if (isMounted.current) {
+                    setHasImage(fallback);
+                }
+            });
 
-            axios.get( parseSrc )
-                .then( () => {
-                    setFetched( true );
-                    setHasImage(
-                        <img src={ src }
-                             alt="pic"
-                             { ...props } />
-                    );
-                } )
-                .catch( e => {
-                    setFetched( true );
-                    console.log( e.message );
-                } );
-        }
-    }, [fetched, src, props])
+        return () => {
+            isMounted.current = false;
+        };
+    }, [src, props, fallback]);
 
     return hasImage;
 }
