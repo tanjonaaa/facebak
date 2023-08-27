@@ -17,3 +17,7 @@ export const createUser = async (form) => {
 export const updateUser = async (email,newData) => {
     return putRequest(`${host}/users`, {...newData, email});
 }
+
+export const login = async (credentials) => {
+    return postRequest(`${host}/users/login`, credentials);
+}

@@ -19,7 +19,6 @@ export const Navbar = () => {
         <header className="flex px-3 pt-2.5 pb-1 fixed w-full bg-white border-b z-50">
             <div className="flex justify-between w-full items-center">
                 <Link to="/" className="text-picton-blue text-xl font-bold">Facebak</Link>
-
                 <div>
                     <Link className="flex items-center justify-center gap-1"
                           to={"/profile/" + ((userData && userData.username) && userData.username)}>
