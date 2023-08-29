@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import {createUser, updateUser} from "../../utils/fetcher/users";
-
+import { createUser } from "../../utils/fetcher/users";
 import EmailInput from './EmailInput';
 import PasswordInput from './PasswordInput';
 import ConfirmPasswordInput from './ConfirmPasswordInput';
@@ -11,6 +10,14 @@ const SignUp = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [passwordMatchError, setPasswordMatchError] = useState(false);
     const [passwordLengthError, setPasswordLengthError] = useState(false);
+    const [successMessage, setSuccessMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [formData, setFormData] = useState({
+        email: '',
+        password: '',
+        confirmPassword: '',
+        username: ''
+    });
 
     const handlePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -20,46 +27,48 @@ const SignUp = () => {
         setShowConfirmPassword(!showConfirmPassword);
     };
 
-    const [formData, setFormData] = useState({
-        email: '',
-        password: '',
-        confirmPassword: '',
-        username: ''
-    });
-
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
 
-        if (e.target.name === "password" || e.target.name === "confirmPassword") {
+        if (name === "password" || name === "confirmPassword") {
+            setPasswordMatchError(name === "confirmPassword" && value !== formData.password);
+            setPasswordLengthError(value.length < 8);
+        } else {
             setPasswordMatchError(false);
-            setPasswordLengthError(e.target.value.length < 8);
+            setPasswordLengthError(false);
         }
     };
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (formData.password !== formData.confirmPassword) {
-            setPasswordMatchError(true);
+        if (passwordMatchError) {
+            setErrorMessage("Passwords do not match");
+            setSuccessMessage("");
             return;
         }
 
         if (passwordLengthError) {
-            console.log("Password must have at least 8 characters");
+            setErrorMessage("Password must have at least 8 characters");
+            setSuccessMessage("");
             return;
         }
 
-        createUser(formData)
-            .then((response) => {
-                if (response.status === 200) {
-                    console.log("User registered successfully");
-                } else {
-                    console.log("User registration failed");
-                }
-            })
-            .catch((error) => {
-                console.log("Error occurred during registration:", error);
-            });
+        try {
+            const response = await createUser(formData);
+            if (response) {
+                setSuccessMessage("User registered successfully");
+                setErrorMessage("");
+            } else {
+                setErrorMessage("User registration failed");
+                setSuccessMessage("");
+            }
+        } catch (error) {
+            setErrorMessage("User is already registered");
+            setSuccessMessage("");
+        }
     };
 
     return (
@@ -95,17 +104,20 @@ const SignUp = () => {
                                     Create an account
                                 </button>
                             </div>
+                            {successMessage && (
+                                <p className="text-green-500">{successMessage}</p>
+                            )}
+                            {errorMessage && (
+                                <p className="text-red-500">{errorMessage}</p>
+                            )}
                             <p className="text-sm font-light text-rich-black dark:text-rich-black">
-                                Already have an account? <a href="/#" className="font-medium text-primary-600 hover:underline dark:text-picton-blue">Login here</a>
+                                Already have an account? <a href="/login" className="font-medium text-primary-600 hover:underline dark:text-picton-blue">Login here</a>
                             </p>
                         </form>
                     </div>
                 </div>
             </div>
         </section>
-
-
-
     );
 };
 

@@ -12,7 +12,7 @@ function App() {
 
           <Routes>
             <Route path="/" Component={NewsFeed} />
-            <Route path="/sign-up" Component={SignUp} />
+            <Route path="/signup" Component={SignUp} />
             <Route path="/Profile/:user" Component={Profile} />
           </Routes>
 
