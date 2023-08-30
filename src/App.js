@@ -1,7 +1,6 @@
 import './App.css';
 import { NewsFeed } from "./pages/NewsFeed";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SignUp from "./pages/SignUp/SignUp";
 import ClientProvider from './components/provider';
 import Profile from "./pages/Profile";
 import { Login } from './pages/Login';
@@ -11,9 +10,10 @@ function App() {
   return (
     <BrowserRouter>
       <ClientProvider>
+
           <Routes>
+            <Route path="/signup" Component={SignUp} />
             <Route path="/login" Component={Login}/>
-            <Route path="/sign-up" Component={SignUp} />
 
             <Route path="/" element={
                 <ProtectedRoute>
@@ -28,6 +28,7 @@ function App() {
             } />
 
           </Routes>
+
       </ClientProvider>
     </BrowserRouter>
   );
