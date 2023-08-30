@@ -31,11 +31,6 @@ export const Login = () => {
             alert("Vous devez fournir un email ,un mot de passe et nom d'itulisateur");
         } else {
             login(formData).then(res => {
-                // an alternative for is under this comment
-                /* Cookies.set("identityToken", res.token);
-                const loggedUser = Object.fromEntries(
-                    Object.entries(res).filter(([key]) => key !== "token")
-                ); */
                 const {token, ...loggedUser} = res;
                 Cookies.set("identityToken", token);
                 Cookies.set("loggedUser", JSON.stringify(loggedUser));
@@ -78,9 +73,9 @@ export const Login = () => {
                             </div>
                             <p className="text-md font-light text-rich-black dark:text-rich-black">
                                 Already have an account?&nbsp;
-                                <Link to="/sign-up"
+                                <Link to="/signup"
                                       className="font-medium text-primary-600 hover:underline dark:text-picton-blue">
-                                    Sign in
+                                    Signup
                                 </Link>
                             </p>
                         </form>
