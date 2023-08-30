@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import EmailInput from "../SignUp/EmailInput";
 import PasswordInput from "../SignUp/PasswordInput";
+import UsernameInput from "../SignUp/UsernameInput";
 import { login } from "../../utils/fetcher/users";
 import Cookies from "js-cookie";
 import {Link, useNavigate} from "react-router-dom";
+
 
 export const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
+        password: '',
+        username: ''
     });
-    const navigation = useNavigate();
+
+    const navigate = useNavigate();
 
     const handlePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -23,14 +27,19 @@ export const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (formData.email === "" || formData.password === "") {
-            alert("Vous devez fournir un email et un mot de passe");
+        if (formData.email === "" || formData.password === "" || formData.username === "") {
+            alert("Vous devez fournir un email ,un mot de passe et nom d'itulisateur");
         } else {
             login(formData).then(res => {
+                // an alternative for is under this comment
+                /* Cookies.set("identityToken", res.token);
+                const loggedUser = Object.fromEntries(
+                    Object.entries(res).filter(([key]) => key !== "token")
+                ); */
                 const {token, ...loggedUser} = res;
                 Cookies.set("identityToken", token);
                 Cookies.set("loggedUser", JSON.stringify(loggedUser));
-                navigation("/");
+                navigate("/");
             })
                 .catch(e => {
                     alert(JSON.stringify(e.response.data))
@@ -51,6 +60,7 @@ export const Login = () => {
                             Sign in
                         </h1>
                         <form className="space-y-6" action="#" onSubmit={handleSubmit}>
+                            <UsernameInput value={formData.username} onChange={handleChange}/>
                             <EmailInput value={formData.email} onChange={handleChange} />
                             <PasswordInput
                                 value={formData.password}
@@ -70,7 +80,7 @@ export const Login = () => {
                                 Already have an account?&nbsp;
                                 <Link to="/sign-up"
                                       className="font-medium text-primary-600 hover:underline dark:text-picton-blue">
-                                    Signup
+                                    Sign in
                                 </Link>
                             </p>
                         </form>
