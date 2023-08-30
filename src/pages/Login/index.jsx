@@ -3,7 +3,7 @@ import EmailInput from "../SignUp/EmailInput";
 import PasswordInput from "../SignUp/PasswordInput";
 import { login } from "../../utils/fetcher/users";
 import Cookies from "js-cookie";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 export const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +11,7 @@ export const Login = () => {
         email: '',
         password: ''
     });
+    const navigation = useNavigate();
 
     const handlePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -26,14 +27,10 @@ export const Login = () => {
             alert("Vous devez fournir un email et un mot de passe");
         } else {
             login(formData).then(res => {
-                // an alternative for is under this comment
-                /* Cookies.set("identityToken", res.token);
-                const loggedUser = Object.fromEntries(
-                    Object.entries(res).filter(([key]) => key !== "token")
-                ); */
                 const {token, ...loggedUser} = res;
                 Cookies.set("identityToken", token);
                 Cookies.set("loggedUser", JSON.stringify(loggedUser));
+                navigation("/");
             })
                 .catch(e => {
                     alert(JSON.stringify(e.response.data))
@@ -73,7 +70,7 @@ export const Login = () => {
                                 Already have an account?&nbsp;
                                 <Link to="/sign-up"
                                       className="font-medium text-primary-600 hover:underline dark:text-picton-blue">
-                                    Sign in
+                                    Signup
                                 </Link>
                             </p>
                         </form>
