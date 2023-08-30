@@ -5,6 +5,7 @@ import ClientProvider from './components/provider';
 import Profile from "./pages/Profile";
 import { Login } from './pages/Login';
 import ProtectedRoute from "./components/protectedRoute";
+import SignUp from "./pages/SignUp/SignUp";
 
 function App() {
   return (
