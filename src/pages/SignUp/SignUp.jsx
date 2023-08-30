@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { createUser } from "../../utils/fetcher/users";
+import {createUser, login} from "../../utils/fetcher/users";
 import EmailInput from './EmailInput';
 import PasswordInput from './PasswordInput';
 import ConfirmPasswordInput from './ConfirmPasswordInput';
 import UsernameInput from './UsernameInput';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import Cookies from "js-cookie";
 
 const SignUp = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -13,6 +14,7 @@ const SignUp = () => {
     const [passwordLengthError, setPasswordLengthError] = useState(false);
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+    const navigation = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -66,6 +68,21 @@ const SignUp = () => {
                 setErrorMessage("User registration failed");
                 setSuccessMessage("");
             }
+            const data = {
+                email: formData.email,
+                username: formData.username,
+                password: formData.password
+            }
+            login(data).then(res => {
+                const {token, ...loggedUser} = res;
+                Cookies.set("identityToken", token);
+                Cookies.set("loggedUser", JSON.stringify(loggedUser));
+                navigation("/");
+            })
+                .catch(e => {
+                    alert(JSON.stringify(e.response.data))
+                    console.log("error on login:",e);
+                })
         } catch (error) {
             setErrorMessage("User is already registered");
             setSuccessMessage("");
