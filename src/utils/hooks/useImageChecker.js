@@ -22,21 +22,13 @@ const useImageChecker = (src, fallback, props = {}) => {
 
             axios.get(parseSrc)
                 .then(() => {
-                    if (isMounted.current) {
-                        setHasImage(<img src={src} alt="pic" {...props} />);
-                    }
+                    setHasImage(<img src={src} alt="pic" {...props} />);
                 })
                 .catch(e => {
-                    if (isMounted.current) {
-                        setHasImage(fallback);
-                    }
+                    console.log(e);
                 });
         }
-
-        return () => {
-            isMounted.current = false;
-        };
-    }, [src, props, fallback]);
+    });
 
     return hasImage;
 }
