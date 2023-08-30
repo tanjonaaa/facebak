@@ -1,10 +1,13 @@
 import {clientContext} from "../../utils/context";
 import {useEffect, useState} from "react";
 import {getUserById} from "../../utils/fetcher/users";
-
+import Cookies from "js-cookie";
 const ClientProvider = ({children}) => {
-    const [userData,setUserData] = useState({});
-    const userId = 'de5b5a7f-d145-45a3-b0a1-ae2b5bb330fc'; // add some features like this
+    const cookie = Cookies.get("loggedUser");
+    const loggedUser = JSON.parse(cookie ? cookie : "{}");
+
+    const [userData,setUserData] = useState(loggedUser);
+    const userId = userData.id; // add some features like this
 
     const fetchUser = async () => {
         try {
