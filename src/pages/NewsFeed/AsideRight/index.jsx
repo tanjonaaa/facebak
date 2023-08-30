@@ -1,9 +1,16 @@
 import {MdLogout} from "react-icons/md";
 import {useContext} from "react";
 import {clientContext} from "../../../utils/context";
-
+import Cookies from "js-cookie";
+import {useNavigate} from "react-router-dom";
 const AsideRight = () => {
     const {userData} = useContext(clientContext);
+    const navigate = useNavigate();
+    const handleLogout = () => {
+        Cookies.remove("loggedUser");
+        Cookies.remove("identityToken");
+        navigate("/login");
+    }
 
     return (
         <aside className="w-3/12 flex-shrink-0 p-2 sticky top-14"
@@ -21,7 +28,8 @@ const AsideRight = () => {
                          className="w-full"/>
                 </div>
                 <div className="absolute bottom-0 left-0 p-2">
-                    <button className="flex items-center gap-1 border rounded-md p-2 text-cerulean">
+                    <button className="flex items-center gap-1 border rounded-md p-2 text-cerulean"
+                            onClick={handleLogout}>
                         <MdLogout className="w-5 h-5"/>
                         <span>Log out</span>
                     </button>
