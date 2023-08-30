@@ -14,22 +14,24 @@ const useImageChecker = (src, fallback, props = {}) => {
 
     useEffect(() => {
         isMounted.current = true;
-        let parseSrc = (src && src.match(/^(\/)/))
-            // eslint-disable-next-line no-restricted-globals
-            ? (location.origin + src)
-            : src;
+        if(isMounted.current){
+            let parseSrc = (src && src.match(/^(\/)/))
+                // eslint-disable-next-line no-restricted-globals
+                ? (location.origin + src)
+                : src;
 
-        axios.head(parseSrc)
-            .then(() => {
-                if (isMounted.current) {
-                    setHasImage(<img src={src} alt="pic" {...props} />);
-                }
-            })
-            .catch(e => {
-                if (isMounted.current) {
-                    setHasImage(fallback);
-                }
-            });
+            axios.get(parseSrc)
+                .then(() => {
+                    if (isMounted.current) {
+                        setHasImage(<img src={src} alt="pic" {...props} />);
+                    }
+                })
+                .catch(e => {
+                    if (isMounted.current) {
+                        setHasImage(fallback);
+                    }
+                });
+        }
 
         return () => {
             isMounted.current = false;

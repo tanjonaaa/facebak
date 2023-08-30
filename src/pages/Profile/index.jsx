@@ -8,6 +8,7 @@ import Banner from "./Banner";
 
 const Profile = () => {
     const {userData} = useContext(clientContext);
+
     const imageSrc = (userData && userData.photo) ? userData.photo : '';
 
     const ProfileImage = useImageChecker(
