@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "facebak",
+  "name": "A social media project",
   "icons": [
     {
       "src": "favicon.ico",
